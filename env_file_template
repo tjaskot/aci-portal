@@ -1,0 +1,5 @@
+# Environment variables defined inside a ".env" file
+#  To be used in Python with various environments
+PROJECT_ID=my-project-id
+SERVICE_ACCOUNT_FILE=path/to/serviceAccountCredentials
+STORAGE_BUCKET_NAME=bucket-data
