@@ -14,6 +14,78 @@
     <div class="container">
 <!--        TODO: Input button to search and then pay returned invoice-->
 <!--        TODO: Send e-mail of completion-->
+        <div class="container">
+<!--        TODO: Submit request for ask for help, or have live chat.-->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">List Invoices</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                                the card's content.</p>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#listInvoicesModal">
+                                Click to List Invoices
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Pay Invoices</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                                the card's content.</p>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#payInvoicesModal">
+                                Click to Pay Invoices
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="listInvoicesModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="listInvoicesModalLabel">List Invoices - Please Submit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% for invoice_detail in invoice_list %}
+                        <ul class="list-group list-group-horizontal-sm">
+                            <li class="list-group-item col-sm-4">{{ invoice_detail }}</li>
+                            <li class="list-group-item col-sm-6">description</li>
+                        </ul>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger">Understood</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="payInvoicesModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="payInvoicesModalLabel">Pay Invoices - Please Submit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    This modal is to Pay Invoices.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger">Understood</button>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 

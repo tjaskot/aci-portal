@@ -28,6 +28,16 @@ config = dotenv_values(".env")
 dotenv_path = Path('path/to/.env')
 load_dotenv(dotenv_path=dotenv_path)
 
+invoice_list = [
+    'Inv',
+    'So#',
+    'Date',
+    'Warranty Start',
+    'List',
+    'Price',
+    'Total'
+]
+
 
 def get_current_username(
     credentials: Annotated[HTTPBasicCredentials, Depends(security)]
@@ -165,7 +175,8 @@ async def search(request: Request):
     # s = smtplib.SMTP('mailhost.stalkerradar.com')
     # s.sendmail(sender, recipient, msg.as_string())
     # s.quit()
-    return templates.TemplateResponse("list_pay_invoices.html", {"request": request})
+    return templates.TemplateResponse("list_pay_invoices.html",
+                                      {"request": request, 'invoice_list': invoice_list})
 
 
 @app.get("/askForHelp")
