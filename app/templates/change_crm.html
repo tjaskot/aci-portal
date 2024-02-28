@@ -8,11 +8,86 @@
 {% block body %}
     {{ super() }}
     <div class="container">
-        <h2></h2>
+        <h2 class="text-center mb-3 mt-3">Submit CRM Change Request</h2>
     </div>
 
     <div class="container">
+<!--        TODO: Input boxes multi line-->
+        <div class="row">
+            <p class="mb-3">Please input the following information so that your request can be processed accurately.</p>
+        </div>
 
+        <form>
+            <div class="row">
+                <div class="col-md-2">
+                    <p>CRM Identifier</p>
+                </div>
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basicIdentifier">@</span>
+                        <input type="text" class="form-control" placeholder="CRM Identifier" aria-label="Identifier"
+                               aria-describedby="basicIdentifier">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Product Classification</p>
+                </div>
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                        <select class="form-select" id="inputGroupSelect01">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Recipient's Email</p>
+                </div>
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Recipient's e-mail"
+                               aria-label="Recipient's e-mail" aria-describedby="recipientEmail">
+                        <span class="input-group-text" id="recipientEmail">@example.com</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Additional E-mails</p>
+                </div>
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="ccEmail" aria-label="ccEmail">
+                        <span class="input-group-text">@</span>
+                        <input type="text" class="form-control" placeholder="Server" aria-label="Server">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Notes</p>
+                </div>
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Freeform Details</span>
+                        <textarea class="form-control" aria-label="Freeform Details"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-danger">Submit</button>
+        </form>
     </div>
 {% endblock %}
 

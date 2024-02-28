@@ -8,11 +8,42 @@
 {% block body %}
     {{ super() }}
     <div class="container">
-        <h2></h2>
+        <h2 class="text-center mb-3 mt-3">Customer Data - Recent Transactions</h2>
     </div>
 
     <div class="container">
-
+<!--        TODO: Table-->
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Customer Identifier</th>
+                <th scope="col">Name</th>
+                <th scope="col">Organization</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Company 1</td>
+                <td>Federal</td>
+                <td>Paid</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Company 2</td>
+                <td>Civilian</td>
+                {% if True +%}
+                    <td style="color: red">Unpaid</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td colspan="2">One Name Company - No Org</td>
+                <td>Paid</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 {% endblock %}
 

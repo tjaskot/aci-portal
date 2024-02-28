@@ -8,11 +8,37 @@
 {% block body %}
     {{ super() }}
     <div class="container">
-        <h2></h2>
+        <h2 class="text-center mb-3 mt-3">Need Assistance?</h2>
     </div>
 
     <div class="container">
-
+<!--        TODO: Submit request for ask for help, or have live chat.-->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <img src="{{ url_for('static', path='images/email_submit.png') }}" class="card-img-top"
+                         alt="..." style="max-height: 200px; max-width: 200px">
+                    <div class="card-body">
+                        <h5 class="card-title">Submit Assistance Email</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-danger">Submit Email</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="{{ url_for('static', path='images/live_chat.png') }}" class="card-img-top"
+                         alt="..." style="max-height: 200px">
+                    <div class="card-body">
+                        <h5 class="card-title">Start Live Chat</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-danger">Start Chat</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
@@ -24,3 +50,4 @@
     {{ super() }}
     <script type="text/javascript" src="{{ url_for('static', path='js/ask_for_help.js') }}"></script>
 {% endblock %}
+
