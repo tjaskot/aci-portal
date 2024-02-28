@@ -49,21 +49,25 @@ async def root(request: Request):
     return RedirectResponse(url="/login")
 
 
-@app.get("/users/me")
+@app.get("/users/admin")
 def read_current_user(username: Annotated[str, Depends(get_current_username)]):
     return {"username": username}
 
 
+# Request details from Starlette: https://www.starlette.io/requests/
 @app.api_route("/login", methods=["GET", "POST"])
 async def login(request: Request):
     if request.method == "POST":
-        username = request.form["username"].strip()
-        password = request.form["password"].strip()
-        return
+        # print(request.method)
+        # async with request.form() as form:
+        #     print(form.get("userEmail"))
+        return templates.TemplateResponse("login_success.html", {"request": request})
     elif request.method == "GET":
         customer_name = "john doe"
         return templates.TemplateResponse("login.html", {"request": request,
                                                          "customer_name": customer_name})
+    else:
+        return "Method not allowed"
 
 
 @app.get("/index", response_class=HTMLResponse)
