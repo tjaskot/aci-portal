@@ -2,20 +2,25 @@
 
 {% block head %}
     {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', path='css/second.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/ask_for_help.css') }}">
 {% endblock %}
 
 {% block body %}
     {{ super() }}
     <div class="container">
-        <h2>Second Page</h2>
+        <h2></h2>
     </div>
 
     <div class="container">
-        <p>{{ second_var }}</p>
+
     </div>
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static', path='js/ask_for_help.js') }}"></script>
 {% endblock %}

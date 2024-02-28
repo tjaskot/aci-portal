@@ -2,18 +2,17 @@
 
 {% block head %}
     {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('static', path='css/login_success.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/search.css') }}">
 {% endblock %}
 
 {% block body %}
     {{ super() }}
     <div class="container">
-        <h2>Login Page</h2>
+        <h2>Search Page</h2>
     </div>
 
     <div class="container">
-        <p>Login Success!</p>
-        <a href="/index" class="btn btn-primary active" aria-current="page">Redirect to Home</a>
+        <p>{{ search_var }}</p>
     </div>
 {% endblock %}
 
