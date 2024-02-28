@@ -1,5 +1,6 @@
 # Fast API Docs : https://fastapi.tiangolo.com/
 # import uvicorn  # When using debugging, uncomment debug if statement at bottom of file.
+import os
 import secrets
 import requests
 import smtplib
@@ -9,7 +10,6 @@ from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials, OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from dotenv import dotenv_values, load_dotenv
 from pathlib import Path
 from typing import Annotated
 from email.mime.multipart import MIMEMultipart
@@ -17,16 +17,14 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 
 
-app = FastAPI()
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
+app = FastAPI(
+    title="ACI Portal",
+    description="ACI Portal POC",
+    version="0.1"
+)
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+templates = Jinja2Templates(directory="app/templates")
 security = HTTPBasic()
-templates = Jinja2Templates(directory="templates")
-
-# get config values from .env
-config = dotenv_values(".env")
-dotenv_path = Path('path/to/.env')
-load_dotenv(dotenv_path=dotenv_path)
 
 invoice_list = [
     'Inv',
@@ -233,4 +231,4 @@ async def keepalive():
 # Used for debugging purposes
 #   Uncomment 'import uvicorn' at top of file
 # if __name__ == "__main__":
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
+#     uvicorn.run(app, host="127.0.0.1", port=8000)
