@@ -196,6 +196,15 @@ async def search(request: Request):
     return templates.TemplateResponse("search.html", {"request": request, "search_var": search_var})
 
 
+@app.post("/search")
+async def search(search_param: str = Form(...)):
+    """
+    Description.
+    :return:
+    """
+    return search_param
+
+
 @app.get("/api")
 async def default(request: Request):
     """
