@@ -16,3 +16,7 @@ Packages and Dependency built-ins (optional: remove unwanted resources)
 - Azure
 - Heroku
 - Vercel
+
+### Hosted Endpoints
+- https://vercel.com/tjaskot/aci-portal
+- https://aci-portal-tjaskot.vercel.app/index
