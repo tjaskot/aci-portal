@@ -116,11 +116,16 @@ async def home(request: Request):
 
 @app.get("/readData")
 async def search(request: Request):
+    async def search(request: Request):
     """
     Description.
     :return:
     """
-    return templates.TemplateResponse("read_customer_data.html", {"request": request})
+    url = "http://127.0.0.1:5000/db_test_call"
+    headers = dict()
+    auth = None
+    db_dict = json.loads(requests.get(url=url, headers=headers, auth=auth).text)
+    return templates.TemplateResponse("read_customer_data.html", {"request": request, "db_dict": db_dict})
 
 
 @app.get("/changeCrm")
