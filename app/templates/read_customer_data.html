@@ -8,7 +8,37 @@
 {% block body %}
     {{ super() }}
     <div class="container">
-        <h2 class="text-center mb-3 mt-3">Customer Data - Recent Transactions</h2>
+        <h2 class="text-center mb-3 mt-3">Customer Data - Live DB Data</h2>
+        <h3 class="text-center mb-3 mt-3">{{ db_dict["customer_name"] }}</h3>
+    </div>
+
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Order Number</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Tax</th>
+                    <th scope="col">Shipping Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dict_item in db_dict["orders"] %}
+                    <tr>
+                        <td>{{ dict_item["order_number"] }}</td>
+                        <td>{{ dict_item["total"] }}</td>
+                        {% if True +%}
+                            <td style="color: blue">{{ dict_item["tax"] }}</td>
+                        {% endif %}
+                        <td>{{ dict_item["shipping_cost"] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <h2 class="text-center mb-3 mt-3">Customer Data - Mock Data</h2>
     </div>
 
     <div class="container">
