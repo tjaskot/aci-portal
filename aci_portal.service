@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=devcportal
 WorkingDirectory=/home/devcportal/aci-portal
-ExecStart=python -m pipenv run uvicorn app.main:app --host 0.0.0.0 --port 8081
+ExecStart=python -m pipenv run uvicorn app.main:app --host 0.0.0.0 --port 8081 --ssl-keyfile /etc/pki/nginx/private/server.key --ssl-certfile /etc/pki/nginx/server.crt
 Restart=always
 
 [Install]
