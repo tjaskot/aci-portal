@@ -1,6 +1,8 @@
 # Fast API Docs : https://fastapi.tiangolo.com/
 # import uvicorn  # When using debugging, uncomment debug if statement at bottom of file.
 import os
+import ssl
+import json
 import secrets
 import requests
 import smtplib
@@ -22,6 +24,8 @@ app = FastAPI(
     description="ACI Portal POC",
     version="0.1"
 )
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+ssl_context.load_cert_chain('/etc/pki/nginx/server.crt', keyfile='/etc/pki/nginx/private/server.key')
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 security = HTTPBasic()
@@ -35,6 +39,36 @@ invoice_list = [
     'Price',
     'Total'
 ]
+
+mock_dict = {
+    "customer_name": "John Doe",
+    "orders": [
+        {
+            "order_number": "ORD123",
+            "total": 100.5,
+            "tax": 7.5,
+            "shipping_cost": 10
+        },
+        {
+            "order_number": "ORD124",
+            "total": 75.25,
+            "tax": 5.25,
+            "shipping_cost": 8.5
+        },
+        {
+            "order_number": "ORD125",
+            "total": 200,
+            "tax": 15,
+            "shipping_cost": 12
+        },
+        {
+            "order_number": "ORD126",
+            "total": 50.75,
+            "tax": 3.75,
+            "shipping_cost": 5.5
+        }
+    ]
+}
 
 
 def get_current_username(
@@ -116,12 +150,11 @@ async def home(request: Request):
 
 @app.get("/readData")
 async def search(request: Request):
-    async def search(request: Request):
     """
     Description.
     :return:
     """
-    url = "http://127.0.0.1:5000/db_test_call"
+    url = "http://10.0.6.38:8080/db_test_call"
     headers = dict()
     auth = None
     db_dict = json.loads(requests.get(url=url, headers=headers, auth=auth).text)
@@ -182,13 +215,13 @@ async def search(request: Request):
                                       {"request": request, 'invoice_list': invoice_list})
 
 
-@app.get("/askForHelp")
+@app.get("/contactUs")
 async def search(request: Request):
     """
     Description.
     :return:
     """
-    return templates.TemplateResponse("ask_for_help.html", {"request": request})
+    return templates.TemplateResponse("contact_us.html", {"request": request})
 
 
 @app.get("/search")
@@ -245,4 +278,4 @@ async def keepalive():
 # Used for debugging purposes
 #   Uncomment 'import uvicorn' at top of file
 # if __name__ == "__main__":
-#     uvicorn.run(app, host="127.0.0.1", port=8000)
+#     uvicorn.run(app, host="127.0.0.1", port=8000, ssl=ssl_context)
