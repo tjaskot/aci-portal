@@ -337,12 +337,12 @@ async def qm_json(request: Request):
         # mcode = customer_number
         form_data = await request.form()
         mcode = form_data["customer_number"]
-        url = "http://10.0.6.38:5000/qm_json"
+        url = "http://10.0.6.38:8080/qm_json"
 
         payload = json.dumps({
-            "Token": "U2FsdGVkX1%2BE1aKFQHHkJJSpgryqlmld3lPblvPH8BI%3D",
-            "UID": "connor",
-            "mcode": "750861",
+            "Token": str(mtoken),
+            "UID": str(mUser),
+            "mcode": str(mcode),
             "action": "onload.address",
             "program_name": "CSD.HOME.SUBS",
             "sessionid": "1718305604831715626-20619-50804"
