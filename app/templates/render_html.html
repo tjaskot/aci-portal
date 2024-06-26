@@ -1,0 +1,49 @@
+{%  extends "base.html" %}
+
+{% block head %}
+{{ super() }}
+<!--    <link rel="stylesheet" href="{{ url_for('static', path='css/CHANGEME.css') }}">-->
+{% endblock %}
+
+{% block body %}
+{{ super() }}
+<div class="container">
+    <h1 class="text-center">Select PoC</h1>
+    <form id="contact_form" action="/page_render" method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="ccr_dropdown">CCR Problems</label>
+                    <select class="form-select" id="ccr_dropdown" name="ccr_dropdown">
+                        {% for list_item_key, list_item_value in render_dict["DD_ccr-c"].items() %}
+                        <option>{{list_item_value}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="country_dropdown">Country</label>
+                    <select class="form-select" id="country_dropdown" name="country_dropdown">
+                        {% for list_item_key, list_item_value in render_dict["DD_country"].items() %}
+                        <option>{{list_item_value}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-danger">Submit</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<!--    <script type="text/javascript" src="{{ url_for('static', path='js/CHANGEME.js') }}"></script>-->
+{% endblock %}

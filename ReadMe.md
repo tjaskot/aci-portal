@@ -19,6 +19,8 @@ Refer to Pipfile for dependency graph (optional: remove unwanted deployment reso
 cat Pipfile
 # List full requirements
 pipenv requirements
+# Export requirements.txt from pipenv
+pipenv requirements > requirements.txt
 # Show graphed dependencies
 pipenv graph
 

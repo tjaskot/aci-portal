@@ -1,0 +1,84 @@
+{
+    "customerno":
+    [
+        {
+            "id": "750861",
+            "custname": "Plano Police Department",
+            "slsid": "187",
+            "slsname": "Michael Guinn",
+            "sls_email": "michaelg@a-concepts.com",
+            "office_pone": "+1-972-213-0349",
+            "cellphone": ""
+        },
+        {
+            "cm_smly_status": "Ok"
+        }
+    ],
+    "address":
+    [
+        {
+            "title": "Customer",
+            "contact_info": "Plano Police Department",
+            "mt_contact": "",
+            "billing_contact": "City of Plano-Accounts Payable"
+        },
+        {
+            "title": "Addr_1",
+            "contact_info": "909 14th Street",
+            "mt_contact": "",
+            "billing_contact": "PO Box 860279"
+        },
+        {
+            "title": "City",
+            "contact_info": "Plano",
+            "mt_contact": "",
+            "billing_contact": "Plano"
+        },
+        {
+            "title": "State",
+            "contact_info": "TX",
+            "mt_contact": "",
+            "billing_contact": "TX"
+        },
+        {
+            "title": "Zip",
+            "contact_info": "75074",
+            "mt_contact": "",
+            "billing_contact": "75086-0279"
+        },
+        {
+            "title": "County",
+            "contact_info": "Collin",
+            "mt_contact": "",
+            "billing_contact": ""
+        },
+        {
+            "title": "Contact",
+            "contact_info": "",
+            "mt_contact": "",
+            "billing_contact": "Accounts Payable"
+        },
+        {
+            "title": "Phone",
+            "contact_info": "+1-972-941-2526",
+            "mt_contact": "",
+            "billing_contact": ""
+        },
+        {
+            "title": "Fax",
+            "contact_info": "+1-972-941-2177",
+            "mt_contact": "",
+            "billing_contact": ""
+        },
+        {
+            "title": "EMail",
+            "contact_info": "",
+            "mt_contact": "",
+            "billing_contact": "AP@Plano.gov"
+        }
+    ],
+    "mapurl":
+    [
+        "http://maps.google.com/maps?q=909+14th+Street,+Plano,+TX+75074&hl=en"
+    ]
+}

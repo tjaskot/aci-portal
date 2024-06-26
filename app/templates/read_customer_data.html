@@ -9,30 +9,78 @@
     {{ super() }}
     <div class="container">
         <h2 class="text-center mb-3 mt-3">Customer Data - Live DB Data</h2>
-        <h3 class="text-center mb-3 mt-3">{{ db_dict["customer_name"] }}</h3>
+    </div>
+
+    <div class="container">
+        <table class="table table-striped">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Customer ID: {{ customer_info["customerno"][0]["id"] }}</h5>
+                    <p class="card-text">{{ customer_info["customerno"][0]["custname"] }}</p>
+                    <p class="card-text">{{ customer_info["customerno"][0]["slsid"] }}</p>
+                    <p class="card-text">{{ customer_info["customerno"][0]["slsname"] }}</p>
+                    <p class="card-text">{{ customer_info["customerno"][0]["sls_email"] }}</p>
+                    <p class="card-text">{{ customer_info["customerno"][0]["office_pone"] }}</p>
+                    <p class="card-text">{{ customer_info["customerno"][0]["cellphone"] }}</p>
+                </div>
+<!--                    {% for address_item in customer_info["address"] %}-->
+<!--                        <ul class="list-group list-group-flush">-->
+<!--                            <li class="list-group-item">Title: {{ address_item["title"] }}</li>-->
+<!--                            <li class="list-group-item">{{ address_item["contact_info"] }}</li>-->
+<!--                            <li class="list-group-item">{{ address_item["mt_contact"] }}</li>-->
+<!--                            <li class="list-group-item">{{ address_item["billing_contact"] }}</li>-->
+<!--                        </ul>-->
+<!--                    {% endfor %}-->
+                <div class="card-body">
+                    <a href="{{ customer_info['mapurl'][0] }}" class="card-link">MapUrl: {{ customer_info["mapurl"][0] }}</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for address_item in customer_info["address"] %}
+                    <tr>
+                        <td>{{ address_item["title"] }}</td>
+                        <td>{{ address_item["contact_info"] }}</td>
+                        <td>{{ address_item["mt_contact"] }}</td>
+                        <td>{{ address_item["billing_contact"] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container">
+        <h2 class="text-center mb-3 mt-3">Customer Data - Test Data</h2>
     </div>
 
     <div class="container">
         <table class="table table-striped">
             <thead>
-                <tr>
-                    <th scope="col">Order Number</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Tax</th>
-                    <th scope="col">Shipping Cost</th>
-                </tr>
+            <tr>
+                <th scope="col">Order Number</th>
+                <th scope="col">Total</th>
+                <th scope="col">Tax</th>
+                <th scope="col">Shipping Cost</th>
+            </tr>
             </thead>
             <tbody>
-                {% for dict_item in db_dict["orders"] %}
-                    <tr>
-                        <td>{{ dict_item["order_number"] }}</td>
-                        <td>{{ dict_item["total"] }}</td>
-                        {% if True +%}
-                            <td style="color: blue">{{ dict_item["tax"] }}</td>
-                        {% endif %}
-                        <td>{{ dict_item["shipping_cost"] }}</td>
-                    </tr>
-                {% endfor %}
+            {% for dict_item in db_dict["orders"] %}
+            <tr>
+                <td>{{ dict_item["order_number"] }}</td>
+                <td>{{ dict_item["total"] }}</td>
+                {% if True +%}
+                <td style="color: blue">{{ dict_item["tax"] }}</td>
+                {% endif %}
+                <td>{{ dict_item["shipping_cost"] }}</td>
+            </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
@@ -42,36 +90,36 @@
     </div>
 
     <div class="container">
-<!--        TODO: Table-->
+        <!--        TODO: Table-->
         <table class="table table-striped">
             <thead>
-                <tr>
-                    <th scope="col">Customer Identifier</th>
-                    <th scope="col">Number</th>
-                    <th scope="col">Organization</th>
-                    <th scope="col">Status</th>
-                </tr>
+            <tr>
+                <th scope="col">Customer Identifier</th>
+                <th scope="col">Number</th>
+                <th scope="col">Organization</th>
+                <th scope="col">Status</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Company 1</th>
-                    <td>1</td>
-                    <td>Federal</td>
-                    <td>Paid</td>
-                </tr>
-                <tr>
-                    <th scope="row">Company 2</th>
-                    <td>2</td>
-                    <td>Civilian</td>
-                    {% if True +%}
-                        <td style="color: red">Unpaid</td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <th scope="row">One Name Company - No Org</th>
-                    <td colspan="2">3</td>
-                    <td>Paid</td>
-                </tr>
+            <tr>
+                <th scope="row">Company 1</th>
+                <td>1</td>
+                <td>Federal</td>
+                <td>Paid</td>
+            </tr>
+            <tr>
+                <th scope="row">Company 2</th>
+                <td>2</td>
+                <td>Civilian</td>
+                {% if True +%}
+                <td style="color: red">Unpaid</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th scope="row">One Name Company - No Org</th>
+                <td colspan="2">3</td>
+                <td>Paid</td>
+            </tr>
             </tbody>
         </table>
     </div>

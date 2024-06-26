@@ -1,0 +1,100 @@
+{%  extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', path='css/qm_json.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ super() }}
+    <div class="container">
+        <h2 class="text-center mb-3 mt-3">QM Database Page</h2>
+    </div>
+
+    <div class="container">
+        <form action="/qm_json" method="post">
+            <div class="row">
+                <p>
+                    Please input Customer number to search QM Database.
+                </p>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basicIdentifier">#</span>
+                        <input type="text" class="form-control" name="customer_number" placeholder="Customer Number"
+                               aria-label="Identifier" aria-describedby="basicIdentifier">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-danger">Submit</button>
+        </form>
+    </div>
+
+    <div class="container pt-3">
+        <div class="row">
+            <hr>
+        </div>
+    </div>
+
+    {% if customer_details != '' %}
+        <div class="container">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Customer Details</h5>
+                    <p class="card-text">
+                        Number: {{ customer_details["customerno"][0]["id"] }}
+                    </p>
+                    <p class="card-text">
+                        Name: {{ customer_details["customerno"][0]["custname"] }}
+                    </p>
+                    <p class="card-text">
+                        SLS Name: {{ customer_details["customerno"][0]["slsname"] }}
+                    </p>
+                    <p class="card-text">
+                        SLS Email: {{ customer_details["customerno"][0]["sls_email"] }}
+                    </p>
+                    <p class="card-text">
+                        Office Phone: {{ customer_details["customerno"][0]["office_pone"] }}
+                    </p>
+                    <p class="card-text">
+                        Mobile Phone: {{ customer_details["customerno"][0]["cellphone"] }}
+                    </p>
+                    <a href="{{ customer_details['mapurl'][0] }}" class="btn btn-danger">MapURL: Google Maps Link</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Contact Info</th>
+                        <th scope="col">MT Contact</th>
+                        <th scope="col">Billing Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dict_item in customer_details["address"] %}
+                        <tr>
+                            <td>{{ dict_item["title"] }}</td>
+                            <td>{{ dict_item["contact_info"] }}</td>
+                            <td>{{ dict_item["mt_contact"] }}</td>
+                            <td>{{ dict_item["billing_contact"] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="{{ url_for('static', path='js/qm_json.js') }}"></script>
+{% endblock %}

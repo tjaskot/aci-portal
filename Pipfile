@@ -8,6 +8,8 @@ requests = "*"
 fastapi = "*"
 starlette = "*"
 uvicorn = "*"
+anyio = "*"
+exceptiongroup = "*"
 
 [dev-packages]
 

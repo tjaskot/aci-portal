@@ -1,0 +1,235 @@
+{%  extends "base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', path='css/search.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ super() }}
+    <div class="container">
+        <h2>Search Page</h2>
+    </div>
+
+    <div class="container">
+        <p>{{ search_var }}</p>
+    </div>
+
+    <div class="container">
+        <h1>Thank you for contacting us - and Stay on the Stalker "A-List" </h1>
+        <h4>Simply fill out the form below and a Stalker representative will get right back to you. And, to continue receiving up-to-date product information and special promotions.</h4>
+        <form id="contact-form" action="/contactUs" method="post">
+            <div class="row">
+                <div class="col-md-2">
+                    <p>First Name*</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="First Name" aria-label="First Name" name="firstname" required>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <p>Last Name*</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Last Name" aria-label="Last Name" name="lastname" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Select Reason*</p>
+                </div>
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="reason">Options</label>
+                        <select class="form-select" id="reason" name="options">
+                            <option selected>Choose...</option>
+                            <option value="US Law Enforcement">US Law Enforcement</option>
+                            <option value="International">International</option>
+                            <option value="Sensors/OEM">Sensors/OEM</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Traffic Products">Traffic Products</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Rank*</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Rank" aria-label="Rank" name="rank" required>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <p>Department*</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Department" aria-label="Department" name="department" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Zip Code*</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Zip Code" aria-label="Zip Code" name="zipcode" required>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <p>State*</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="stateOption">Options</label>
+                        <select class="form-select" id="stateOption" name="stateOption">
+                            {% for list_item_key, list_item_value in render_dict["DD_CII.STATUS"].items() %}
+                                <option>{{list_item_value}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Phone Number*</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Phone Number" aria-label="Phone Number" name="phoneNumber" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Please enter a valid phone number (e.g., 123-456-7890)">
+                        <div class="invalid-feedback">Please enter a valid phone number (e.g., 123-456-7890).</div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <p>Email*</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" title="Please enter a valid email address">
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Contact By*</p>
+                </div>
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="contactOption">Options</label>
+                        <select class="form-select" id="contactOption" name="contactOption">
+                            <option value="" selected disabled>Choose...</option>
+                            <option value="Email">Email</option>
+                            <option value="Phone">Phone</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Message*</p>
+                </div>
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        <textarea class="form-control" aria-label="Message Details" name="message" required></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <h4>You must Opt-In to remain in Stalker Nation. Just check the boxes below to indicate you're opting in.</h4>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p>I agree to receive Email communications from Stalker Radar *</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="email_communication">Options</label>
+                        <select class="form-select" id="email_communication" name="emailCommunication">
+                            <option value="" selected disabled>Choose...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p>I agree to receive Mail communications from Stalker Radar *</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="mail_communication">Options</label>
+                        <select class="form-select" id="mail_communication" name="mailCommunication">
+                            <option value="" selected disabled>Choose...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p>I agree to receive Telephone communications from Stalker Radar *</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="telephone_communication">Options</label>
+                        <select class="form-select" id="telephone_communication" name="telephoneCommunication">
+                            <option value="" selected disabled>Choose...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p>I agree to receive Text Messaging from Stalker Radar *</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="text_communication">Options</label>
+                        <select class="form-select" id="text_communication" name="textCommunication">
+                            <option value="" selected disabled>Choose...</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-danger" type="submit">Submit</button>
+
+            <h5>By clicking Submit above, on today’s date, you consent to allow Stalker Radar to store and process the personal information submitted above to provide you the content requested for a period of 5 years.</h5>
+            <h5>You can opt out at any time. For more information on how to unsubscribe, our privacy practices, and how we are committed to protecting and respecting your privacy, please review our Privacy Policy.</h5>
+        </form>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ super() }}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}

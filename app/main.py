@@ -5,24 +5,20 @@ import ssl
 import json
 import secrets
 import requests
-import smtplib
-from starlette.requests import Request as StarletteRequest  # To be used with Request.body forms
 from fastapi import FastAPI, Request, HTTPException, Form, Depends, HTTPException, status
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials, OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from pathlib import Path
 from typing import Annotated
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 
-
 app = FastAPI(
     title="ACI Portal",
     description="ACI Portal POC",
-    version="0.1"
+    version="1.5"
 )
 ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
 ssl_context.load_cert_chain('/etc/pki/nginx/server.crt', keyfile='/etc/pki/nginx/private/server.key')
@@ -72,7 +68,7 @@ mock_dict = {
 
 
 def get_current_username(
-    credentials: Annotated[HTTPBasicCredentials, Depends(security)]
+        credentials: Annotated[HTTPBasicCredentials, Depends(security)]
 ):
     current_username_bytes = credentials.username.encode("utf8")
     correct_username_bytes = b"stan"
@@ -158,7 +154,13 @@ async def search(request: Request):
     headers = dict()
     auth = None
     db_dict = json.loads(requests.get(url=url, headers=headers, auth=auth).text)
-    return templates.TemplateResponse("read_customer_data.html", {"request": request, "db_dict": db_dict})
+    with open(os.path.join(os.getcwd(), "app", "common", "resources", "customer_info.json"), "r") as cust_json:
+        customer_info = json.load(cust_json)
+    return templates.TemplateResponse("read_customer_data.html", {
+        "request": request,
+        "db_dict": db_dict,
+        "customer_info": customer_info
+    })
 
 
 @app.get("/changeCrm")
@@ -216,12 +218,58 @@ async def search(request: Request):
 
 
 @app.get("/contactUs")
-async def search(request: Request):
+async def contact_us(request: Request):
     """
     Description.
     :return:
     """
-    return templates.TemplateResponse("contact_us.html", {"request": request})
+    render_dict = dict()
+    cwd = os.getcwd()
+    dropdown_file = "dropdown.json"
+    with open(os.path.join(cwd, "app", "common", "resources", dropdown_file), "r") as dropdown_json:
+        render_dict = json.load(dropdown_json)
+    return templates.TemplateResponse("contact_us.html", {"request": request, "render_dict": render_dict})
+
+
+@app.post("/contactUs")
+async def contact_us(firstname: str = Form(...), lastname: str = Form(...),
+                     options: str = Form(...),
+                     rank: str = Form(...),
+                     department: str = Form(...),
+                     zipcode: str = Form(...),
+                     stateOption: str = Form(...),
+                     phoneNumber: str = Form(...),
+                     email: str = Form(...),
+                     contactOption: str = Form(...),
+                     message: str = Form(...),
+                     emailCommunication: str = Form(...),
+                     mailCommunication: str = Form(...),
+                     telephoneCommunication: str = Form(...),
+                     textCommunication: str = Form(...)):
+    """
+    Handle the form submission.
+    :return: First and last name
+    """
+    form_data = {"firstName": firstname,
+            "lastName": lastname,
+            "rank": rank,
+            "options": options,
+            "department": department,
+            "zipcode": zipcode,
+            "stateOption": stateOption,
+            "phoneNumber": phoneNumber,
+            "email": email,
+            "contactOption": contactOption,
+            "message": message,
+            "emailCommunication": emailCommunication,
+            "mailCommunication": mailCommunication,
+            "telephoneCommunication": telephoneCommunication,
+            "textCommunication": textCommunication
+            }
+    path = os.getcwd()
+    with open("my_created_file.txt", "w") as test_file:
+        test_file.write(str(form_data))
+    return form_data
 
 
 @app.get("/search")
@@ -243,10 +291,82 @@ async def search(search_param: str = Form(...)):
     return search_param
 
 
+@app.get("/page_render")
+async def page_render(request: Request):
+    """
+    Description.
+    :return:
+    """
+    # render_list = ["Alabama", "Alaska", "Arizona", "Arkansas", "Armed Forces Americas", "Armed Forces Europe",
+    #                "Armed Forces Pacific", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia",
+    #                "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky",
+    #                "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri",
+    #                "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York",
+    #                "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island",
+    #                "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+    #                "West Virginia", "Wisconsin", "Wyoming"]
+    cwd = os.getcwd()
+    dropdown_file = "dropdown.json"
+    with open(os.path.join(cwd, "app", "common", "resources", dropdown_file), "r") as dropdown_json:
+        render_dict = json.load(dropdown_json)
+    return templates.TemplateResponse("render_html.html", {"request": request, "render_dict": render_dict})
+
+
+@app.post("/page_render")
+async def page_render(state_dropdown: str = Form(...)):
+    """
+    Description.
+    :return:
+    """
+    render_dict = {"Alabama": "AL", "Alaska": "AK"}
+    dropdown_value = render_dict[state_dropdown]
+    return {"dropdown_value": dropdown_value}
+
+
+@app.api_route("/qm_json", methods=["GET", "POST"])
+async def qm_json(request: Request):
+    """
+    Call QM database and have return response with passed json parameters
+    :return:
+    """
+    if request.method == "GET":
+        customer_details = str()
+        return templates.TemplateResponse("qm_json_call.html", {"request": request,
+                                                                "customer_details": customer_details})
+    if request.method == "POST":
+        # mcode = customer_number
+        form_data = await request.form()
+        mcode = form_data["customer_number"]
+        url = "http://10.0.6.38:5000/qm_json"
+
+        payload = json.dumps({
+            "Token": "U2FsdGVkX1%2BE1aKFQHHkJJSpgryqlmld3lPblvPH8BI%3D",
+            "UID": "connor",
+            "mcode": "750861",
+            "action": "onload.address",
+            "program_name": "CSD.HOME.SUBS",
+            "sessionid": "1718305604831715626-20619-50804"
+        })
+        headers = {
+            'Content-Type': 'application/json'
+        }
+
+        response = requests.request("POST", url, headers=headers, data=payload)
+        response_json = json.loads(response.text)
+        # return response_json
+        return templates.TemplateResponse("qm_json_call.html", {"request": request, "customer_details": response_json})
+
+"""
+--- IMPORTANT NOTES ---
+1. APIs below this line should not be moved and used for application monitoring end-points.
+2. New end-points can be added but application relevant routes should all be above this line.
+"""
+
+
 @app.get("/api")
 async def default(request: Request):
     """
-    Description.
+    Overview list of basic API's available.
     :return:
     """
     return JSONResponse(
@@ -266,7 +386,7 @@ async def default(request: Request):
 @app.get("/keepalive")
 async def keepalive():
     """
-    Description.
+    Keep Alive endpoint leveraged for dashboards and telemetry of 200 status.
     :return:
     """
     return {
